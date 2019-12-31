@@ -12,7 +12,14 @@ redis-spring/src/main/java/com/redis/test/redisspring/RedisSpringApplication.jav
 Go to redis installtaion library then run 
 **./src/redis-server**
 4. Use Below postman for the adding and getting the values
+
+
+
+
 **POST**
+
+
+
 curl --location --request POST '127.0.0.1:8080/programmer-string/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -20,6 +27,9 @@ curl --location --request POST '127.0.0.1:8080/programmer-string/' \
 	"name":"hello",
 	"compnay":"testcompany"
 }'
+
+
+
 **GET**
 curl --location --request GET '127.0.0.1:8080/programmer-string/110' \
 
