@@ -1,5 +1,6 @@
 package com.redis.test.redisspring.config;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +43,6 @@ public class SpringConfig {
         redisStandaloneConfiguration.setPort(port);
         return new JedisConnectionFactory(redisStandaloneConfiguration, getJedisClientConfig());
     }
-
     @Bean
     public RedisTemplate redisTemplate(){
         RedisTemplate<String ,Object> redisTemplate = new RedisTemplate<>();

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProgrammerServiceImpl {
+public class ProgrammerServiceClusterImpl {
     @Autowired
     @Qualifier(value = "programmerDaoClusterImpl")
     ProgrammerRepository programmerRepository;
