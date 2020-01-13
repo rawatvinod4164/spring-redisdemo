@@ -27,17 +27,17 @@ public class Consumer {
                 new ArrayBlockingQueue<Runnable>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
     }
 
-    @KafkaListener(id="consumer_1", topics = "test", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(id="consumer_1", topics = "MultipleBrokerTopic", groupId = "${spring.kafka.consumer.group-id}")
     public void consumer1(String payload) {
         logger.info("Consumer 1 : received payload='{}' ", payload);
     }
 
-//    @KafkaListener(id="consumer_2", topics = "MultipleBrokerTopic", groupId = "${spring.kafka.consumer.group-id}")
-//    public void consumer2(String payload) {
-//        logger.info("Consumer 2 : received payload='{}' ", payload);
-//    }
-//    @KafkaListener(id="consumer_3", topics = "MultipleBrokerTopic", groupId = "${spring.kafka.consumer.group-id}")
-//    public void consumer3(String payload) {
-//        logger.info("Consumer 3 : received payload='{}' ", payload);
-//    }
+    @KafkaListener(id="consumer_2", topics = "MultipleBrokerTopic", groupId = "${spring.kafka.consumer.group-id}")
+    public void consumer2(String payload) {
+        logger.info("Consumer 2 : received payload='{}' ", payload);
+    }
+    @KafkaListener(id="consumer_3", topics = "MultipleBrokerTopic", groupId = "${spring.kafka.consumer.group-id}")
+    public void consumer3(String payload) {
+        logger.info("Consumer 3 : received payload='{}' ", payload);
+    }
 }
