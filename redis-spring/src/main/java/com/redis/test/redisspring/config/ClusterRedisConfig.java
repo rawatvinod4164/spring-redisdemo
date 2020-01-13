@@ -1,37 +1,32 @@
 package com.redis.test.redisspring.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
+import org.springframework.data.redis.connection.RedisClusterConfiguration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.Arrays;
 import java.util.List;
 
-@Component
+@Configuration
 public class ClusterRedisConfig {
     @Value("${spring.redis.cluster.nodes}")
-    private String nodes;
-    @Value("${spring.redis.cluster.max-redirects}")
-    private int maxRedirects;
-
-    public int getMaxRedirects() {
-        return maxRedirects;
+    private List<String> nodes;
+    @Bean("lettuceConnectionFactory")
+    public RedisConnectionFactory getLettuceConnectionnFactory(){
+        RedisClusterConfiguration rc = new RedisClusterConfiguration(nodes);
+        rc.setMaxRedirects(10);
+        RedisConnectionFactory rcf = new LettuceConnectionFactory(rc);
+        return rcf;
     }
-
-    public void setMaxRedirects(int maxRedirects) {
-        this.maxRedirects = maxRedirects;
-    }
-
-    public String getNodes() {
-        return nodes;
-    }
-    public List<String> getNodesList(){
-        return Arrays.asList(this.nodes.split(","));
-    }
-
-    public void setNodes(String nodes) {
-        this.nodes = nodes;
+    @Bean("redisTemplateCluster")
+    public RedisTemplate<String, ?> getRedisTemplate(@Qualifier("lettuceConnectionFactory") RedisConnectionFactory connectionFactory){
+        RedisTemplate<String, ?> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(connectionFactory);
+        return redisTemplate;
     }
 }
 

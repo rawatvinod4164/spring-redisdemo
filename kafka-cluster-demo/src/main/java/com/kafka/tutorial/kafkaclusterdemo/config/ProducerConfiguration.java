@@ -42,7 +42,7 @@ public class ProducerConfiguration {
         propertiesMap.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
 
         propertiesMap.put(ProducerConfig.LINGER_MS_CONFIG,"20");
-        propertiesMap.put(ProducerConfig.COMPRESSION_TYPE_CONFIG,"snappy");
+//        propertiesMap.put(ProducerConfig.COMPRESSION_TYPE_CONFIG,"snappy");
         propertiesMap.put(ProducerConfig.BATCH_SIZE_CONFIG,Integer.toString(32*1024));
 
         return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(kafkaProperties.buildProducerProperties()));

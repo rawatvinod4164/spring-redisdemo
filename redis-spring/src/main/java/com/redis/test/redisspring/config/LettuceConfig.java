@@ -4,9 +4,7 @@ import io.lettuce.core.ReadFrom;
 import io.lettuce.core.RedisURI;
 import io.lettuce.core.cluster.RedisClusterClient;
 import io.lettuce.core.cluster.api.StatefulRedisClusterConnection;
-import io.lettuce.core.resource.ClientResources;
-import io.lettuce.core.resource.DefaultClientResources;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,18 +14,25 @@ import java.util.stream.Collectors;
 
 @Configuration
 public class LettuceConfig {
-    @Autowired
-    ClusterRedisConfig clusterRedisConfig;
+//    @Autowired
+//    ClusterRedisConfig clusterRedisConfig;
     private StatefulRedisClusterConnection<String ,String> connection;
     private RedisClusterClient redisClusterClient;
+
+    @Value("${spring.redis.cluster.nodes}")
+    private List<String> nodes;
+    @Value("${spring.redis.cluster.max-redirects:5}")
+    private Integer maxRedirects;
     @Bean
     public StatefulRedisClusterConnection<String, String> getRedisClusterConnection(){
-//        List<RedisURI> redisURIS = clusterRedisConfig.getNodesList()
-//                .stream()
-//                .map(RedisURI::create)
-//                .collect(Collectors.toList());
+        List<RedisURI> redisURIS = nodes
+                .stream()
+                .map(host -> host.split(":"))
+                .map(host ->RedisURI.create(host[0],Integer.parseInt(host[1])))
+                .collect(Collectors.toList());
         //ip of any of the redis server on cluster
-        redisClusterClient = RedisClusterClient.create("redis://localhost:30001");
+//        redisClusterClient = RedisClusterClient.create("redis://localhost:30001");
+        redisClusterClient  = RedisClusterClient.create(redisURIS);
         connection = redisClusterClient.connect();
         connection.setReadFrom(ReadFrom.REPLICA_PREFERRED);
         return connection;
