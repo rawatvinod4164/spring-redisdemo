@@ -1,5 +1,7 @@
 //package com.redis.test.redisspring.config;
+//import com.redis.test.redisspring.services.RedisSubscriber;
 //import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Qualifier;
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.context.annotation.Bean;
@@ -9,6 +11,11 @@
 //import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 //import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 //import org.springframework.data.redis.core.RedisTemplate;
+//import org.springframework.data.redis.listener.ChannelTopic;
+//import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+//import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+//import org.springframework.data.redis.serializer.GenericToStringSerializer;
+//import org.springframework.data.redis.serializer.StringRedisSerializer;
 //
 //@Configuration
 //public class SpringConfig {
@@ -48,6 +55,32 @@
 //    public RedisTemplate redisTemplate(@Qualifier("jedisConnectionFactory") JedisConnectionFactory jedisConnectionFactory){
 //        RedisTemplate<String ,Object> redisTemplate = new RedisTemplate<>();
 //        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+//        redisTemplate.setValueSerializer(new GenericToStringSerializer<>(Object.class));
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
 //        return redisTemplate;
+//    }
+//
+//    @Bean("test")
+//    public ChannelTopic getTestChannelTopic(){
+//        return new ChannelTopic("test");
+//    }
+//    @Bean("rest")
+//    public ChannelTopic getRestChannelTopic(){
+//        return new ChannelTopic("rest");
+//    }
+//    @Autowired
+//    private RedisSubscriber redisSubscriber;
+//    @Bean
+//    MessageListenerAdapter messageListenerAdapter() {
+//        return new MessageListenerAdapter(redisSubscriber);
+//    }
+//
+//    @Bean
+//    RedisMessageListenerContainer redisContainer() {
+//        RedisMessageListenerContainer container
+//                = new RedisMessageListenerContainer();
+//        container.setConnectionFactory(getJedisConnnectionnFactory());
+//        container.addMessageListener(messageListenerAdapter(), getTestChannelTopic());
+//        return container;
 //    }
 //}

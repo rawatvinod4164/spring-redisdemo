@@ -47,5 +47,4 @@ public class ProgrammerController {
     public Programmer readStringFromClusterRedisTemplate(@PathVariable String id){
         return programmerDaoClusterRedisTemplate.getProgrammer(id);
     }
-
 }

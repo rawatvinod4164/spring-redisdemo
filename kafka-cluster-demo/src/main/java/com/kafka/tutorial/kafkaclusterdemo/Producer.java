@@ -21,7 +21,7 @@ public class Producer {
         this.producer = producer;
     }
 
-    public void produce(ProducerObject producerObject){
+    public void produce(ProducerObject producerObject) {
         //create record
         ProducerRecord<String,String > record;
         // sending to kafka producer there is callback if something happens

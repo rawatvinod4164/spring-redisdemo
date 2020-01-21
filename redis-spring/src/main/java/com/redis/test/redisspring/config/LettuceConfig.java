@@ -43,5 +43,4 @@ public class LettuceConfig {
         redisClusterClient.shutdown();
 
     }
-
 }
