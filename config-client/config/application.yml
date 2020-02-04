@@ -1,0 +1,11 @@
+---
+spring:
+  profiles: qa
+msg: FALLBACCK QA
+msg1: FALLBACCK QA msg1
+---
+spring:
+  profiles: development
+msg: FALLBACCK DEV
+msg1: FALLBACCK DEV msg1
+---

@@ -26,7 +26,6 @@ public class ClusterRedisConfig {
     @Bean("lettuceConnectionFactory")
     public RedisConnectionFactory getLettuceConnectionnFactory() {
         RedisClusterConfiguration rc = new RedisClusterConfiguration(nodes);
-        rc.setMaxRedirects(10);
         RedisConnectionFactory rcf = new LettuceConnectionFactory(rc);
         return rcf;
     }

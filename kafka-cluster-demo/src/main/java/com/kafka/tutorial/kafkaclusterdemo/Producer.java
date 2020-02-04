@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
+import java.util.concurrent.ExecutionException;
+
 @Service
 public class Producer {
     private static final Logger logger = LoggerFactory.getLogger(Producer.class);
@@ -44,6 +46,13 @@ public class Producer {
                     logger.error("unable to send message ");
                 }
             });
+            try {
+                future.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
     }
 
